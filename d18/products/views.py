@@ -1,7 +1,22 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'index.html')
+    context ={
+        'title':'Рублик'
+    }
+    return render(request, 'index.html',context=context)
 
 def products(request):
-    return render(request, 'products.html')
+    context = {
+        'products': [
+            {'image':"/static/vendor/img/products/Adidas-hoodie.png",
+             'name':'100-летняя куртка деда',
+             'price':'бесценно',
+             'description':'Пахнет байкалом'},
+
+        ]
+
+
+
+    }
+    return render(request, 'products.html', context = context)

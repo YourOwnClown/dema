@@ -112,26 +112,28 @@
             </div>
 
             <div class="row">
-
+              {% for product in products %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Adidas-hoodie.png"
+                                 src={{product.image}}
                                  alt="">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">Худи черного цвета с монограммами adidas Originals</a>
+                                <a href="#">{{product.name}}</a>
                             </h4>
-                            <h5>6 090,00 руб.</h5>
-                            <p class="card-text">Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.</p>
+                            <h5>{{product.price}}</h5>
+                            <p class="card-text">{{product.description}}</p>
                         </div>
                         <div class="card-footer text-center">
                             <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+
 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
@@ -213,7 +215,7 @@
                         </div>
                     </div>
                 </div>
-
+                }
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <a href="#">
