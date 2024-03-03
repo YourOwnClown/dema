@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+from .models import *
+
+
 def index(request):
     context ={
         'title':'Рублик'
@@ -8,15 +11,14 @@ def index(request):
 
 def products(request):
     context = {
-        'products': [
-            {'image':"/static/vendor/img/products/Adidas-hoodie.png",
-             'name':'100-летняя куртка деда',
-             'price':'бесценно',
-             'description':'Пахнет байкалом'},
-
-        ]
+            'title':'magazik',
+            'products' : Product.objects.all(),
+            'categories': ProductCategory.objects.all(),
+        }
 
 
 
-    }
+
+
+
     return render(request, 'products.html', context = context)
