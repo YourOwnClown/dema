@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.shortcuts import render,  HttpResponseRedirect
-from django.contrib import auth
+from django.contrib import auth, messages
 from .models import User
-from .forms import UserLoginForm , UserCreationForm , UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 app_name = 'users'
 
 def login(request):
@@ -11,7 +11,7 @@ def login(request):
         if form.is_valid():
             username =  request.POST['username']
             password = request.POST['password']
-            user = auth.authenticate(uername = username, password = password)
+            user = auth.authenticate(username = username, password = password)
             if user:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
@@ -27,12 +27,30 @@ def register(request):
         form = UserRegistrationForm(data = request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрировались!')
             return HttpResponseRedirect(reverse('users:login'))
 
     else:
         form = UserRegistrationForm()
     context = {'form': form,}
     return render(request, 'register.html', context=context)
+
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+        else:print(form.errors)
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {'Title':'Профиль','form': form,}
+    return render(request, 'profile.html', context=context)
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect (reverse('index'))
+
 
 
 
